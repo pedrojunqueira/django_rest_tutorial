@@ -3,6 +3,7 @@ from django.http import Http404
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from drf_yasg.utils import swagger_auto_schema
 
 
 from . import serializers
@@ -14,6 +15,14 @@ class FriendList(APIView):
         serializer = serializers.FriendSerializer(friends, many=True)
         return Response(serializer.data)
     
+    
+    @swagger_auto_schema(
+        request_body=serializers.FriendSerializer,
+        responses={
+            201: serializers.FriendSerializer,
+            400: 'Bad Request'
+        }
+    )
     def post(self, request):
         serializer = serializers.FriendSerializer(data=request.data)
         if serializer.is_valid():
@@ -35,6 +44,13 @@ class FriendDetail(APIView):
         serializer = serializers.FriendSerializer(friend)
         return Response(serializer.data)
     
+    @swagger_auto_schema(
+        request_body=serializers.FriendSerializer,
+        responses={
+            200: serializers.FriendSerializer,
+            400: 'Bad Request'
+        }
+    )
     def put(self, request, pk):
         friend = self.get_object(pk)
         serializer = serializers.FriendSerializer(friend, data=request.data)
