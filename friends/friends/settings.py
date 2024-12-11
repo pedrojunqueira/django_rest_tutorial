@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "friends_list",
     "rest_framework",
     "drf_yasg",
+    "accounts",
 ]
 
 MIDDLEWARE = [
